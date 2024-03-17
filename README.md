@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+# React Library Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a React library management system, allowing users to manage books, student lists, and borrowing history. It utilizes an API built with Spring Boot.
 
-## Available Scripts
+## Repository for API
 
-In the project directory, you can run:
+The API for this project is available on GitHub. You can find it [here](https://github.com/yasinunl/library).
 
-### `npm start`
+## Folder Structure
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The project is structured as follows:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- `container/`: Contains components for book list, borrowed history, and student list.
+- `component/`: Contains individual components for list items, update modal, create components for each list and login and register modals,.
+- `auth/`: Contains authentication related files, including AuthContext and custom hooks.
+- `service/`: Contains service files for API operations such as getAll, update, delete, and create.
 
-### `npm test`
+## Authentication
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The authentication system is managed using React context and custom hooks. The `AuthContext` provides the authentication state, including whether the user is logged in, user details, and role.
 
-### `npm run build`
+```javascript
+const initialState = {
+    isLoggedIn: false,
+    user: null, // Or an empty object for user details
+    role: null,
+};
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+export const AuthContext = React.createContext(initialState);
+export const useAuth = () => { ... 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+ const login = (user) => {
+        setAuthState({ isLoggedIn: true, "user": user.token, "role": user.role });
+        localStorage.setItem('authState', JSON.stringify({ isLoggedIn: true, "token": user.token, "role": user.role }));
+    };
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+}
+```
 
-### `npm run eject`
+## Service Operations
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The `service/` folder contains functions for interacting with the API:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```javascript
+// Retrieves all data from the API.
+const getAll = () => { ... }
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+// Updates existing data on the API.
+const update = (data, token) => { ... }
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+// Deletes data from the API.
+const delete = (id, token) => { ... }
 
-## Learn More
+// Creates new data entries on the API.
+const create = (data) => { ... }
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Usage
+To use this library project:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Before starting, start api
+1. Clone the repository.
+1. Install dependencies using npm install.
+1. Start the development server with npm start.
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Make sure to set up the API project and configure the endpoints accordingly in the React project.

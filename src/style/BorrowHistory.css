@@ -1,0 +1,60 @@
+.borrow-history {
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse; /* Ensures table cells don't have double borders */
+  }
+  
+  th,
+  td {
+    padding: 0.5rem 1rem;
+    border: 1px solid #eee;
+    text-align: left; /* Align content to the left */
+  }
+  
+  th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+  }
+  
+  /* Add styles for conditional elements (optional) */
+  .admin-only {
+    display: none; /* Initially hide for non-admins */
+  }
+  
+  .is-admin &.admin-only {
+    display: block; /* Show for admins */
+  }
+  .create-borrow-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Add spacing between fields */
+  }
+  
+  .borrow-field {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Add spacing between label and select */
+  }
+  
+  CSS
+.create-borrow-button {
+  padding: 0.75rem 1.5rem; /* Increase padding for better spacing */
+  border: none;
+  border-radius: 4px;
+  background-color: #4CAF50; /* Green color for creation */
+  color: white;
+  font-weight: bold; /* Add emphasis */
+  text-transform: uppercase; /* Convert text to uppercase for a bolder look */
+  cursor: pointer; /* Indicate clickable action */
+  transition: background-color 0.2s ease-in-out; /* Add smooth hover transition */
+}
+
+.create-borrow-button:hover {
+  background-color: #388e3c; /* Darken green on hover with slight color adjustment */
+}
