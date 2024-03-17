@@ -20,6 +20,7 @@ The project is structured as follows:
 The authentication system is managed using React context and custom hooks. The `AuthContext` provides the authentication state, including whether the user is logged in, user details, and role.
 
 ```javascript
+// Check app.js for provider
 const initialState = {
     isLoggedIn: false,
     user: null, // Or an empty object for user details
