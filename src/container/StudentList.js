@@ -2,9 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import Student from '../component/Student';
 import '../style/StudentList.css';
 import CreateStudent from '../component/CreateStudent';
-import { addStudent, deleteStudent, getAllStudent, updateStudent } from '../service/StudentService';
+import { addStudent, deleteStudent, getAllStudent, getSearchedStudent, updateStudent } from '../service/StudentService';
 import { AuthContext } from '../auth/auth';
 import UpdateStudent from '../component/UpdateStudent';
+import SearchBar from '../component/SearchBar';
 
 
 const StudentsList = () => {
@@ -38,6 +39,20 @@ const StudentsList = () => {
 
   }
 
+  const handleSearch = (searchTerm) => {
+    const fetchData = async () => {
+      if (searchTerm == "") {
+        const studentData = await getAllStudent(searchTerm);
+        setStudents(studentData);
+      }
+      else {
+        const studentData = await getSearchedStudent(searchTerm);
+        setStudents(studentData);
+      }
+    }
+    fetchData();
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const studentData = await getAllStudent();
@@ -57,12 +72,13 @@ const StudentsList = () => {
     setStudents(student)
   };
   return (
-    <div className="student-list">
+    <div className="books-list">
       {isLoggedIn && (
         <>
           <CreateStudent onCreateStudent={handleCreateStudentClick} />
         </>
       )}
+      <SearchBar onSearch={handleSearch} />
       <h1>Students</h1>
       <table>
         <thead>

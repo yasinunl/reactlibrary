@@ -119,3 +119,14 @@
 .register-modal button:hover {
   color: #4CAF50; /* Green color on hover */
 }
+
+.search-bar {
+  margin-bottom: 1rem;
+}
+
+.search-bar input {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 20%;
+}

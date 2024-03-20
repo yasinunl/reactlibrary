@@ -2,16 +2,19 @@ import React, { useState, useEffect, useContext } from 'react';
 import Book from '../component/Book';
 import '../style/BookList.css';
 import CreateBook from '../component/CreateBook';
-import { addBook, deleteAllBook, deleteBook, getAllBooks, updateBook } from '../service/BookService';
+import { addBook, deleteAllBook, deleteBook, getAllBooks, getCount, getSearchedBooks, updateBook } from '../service/BookService';
 import UpdateBook from '../component/UpdateBook';
 import { AuthContext } from '../auth/auth'
+import SearchBar from '../component/SearchBar';
 
 const BooksList = () => {
-  const [books, setBooks] = useState([
-  ]);
+  const [books, setBooks] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageCount, setPageCount] = useState(1);
   const [book, setBook] = useState({});
   const [isCreatingBook, setIsCreatingBook] = useState(false);
   const [updateModal, setUpdateModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(false);
   const { user, isLoggedIn, role } = useContext(AuthContext)
 
   const handleCreateBook = async (bookData) => {
@@ -56,14 +59,50 @@ const BooksList = () => {
     fetchData();
   }
 
+  const handleSearch = (searchTerm) => {
+    const fetchData = async () => {
+      if (searchTerm == "") {
+        const bookData = await getAllBooks(searchTerm);
+        setBooks(bookData);
+        setSearchQuery(false)
+      }
+      else {
+        const bookData = await getSearchedBooks(searchTerm);
+        setBooks(bookData);
+        setSearchQuery(true)
+      }
+    }
+    fetchData();
+  };
+
+  const handlePrevClick = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextClick = () => {
+    if (currentPage < pageCount) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  useEffect(()=>{
+    const fetchData = async () => {
+      const bookData = await getAllBooks(currentPage);
+      setBooks(bookData);
+    }
+    fetchData();
+  }, [currentPage])
   useEffect(() => {
     const fetchData = async () => {
       const bookData = await getAllBooks();
+      const pageCount = await getCount();
+      setPageCount(pageCount);
       setBooks(bookData);
     }
     fetchData();
   }, [])
-
   return (
     <div className="books-list">
       {isLoggedIn && (
@@ -71,6 +110,7 @@ const BooksList = () => {
           <CreateBook onCreateBook={handleCreateBook} />
         </>
       )}
+      <SearchBar onSearch={handleSearch} />
       <h1>Books</h1>
       <table>
         <thead>
@@ -108,7 +148,16 @@ const BooksList = () => {
           ))}
         </tbody>
       </table>
-
+      {/* Searching controller */}
+      {!searchQuery && <div className="pagination-buttons">
+        <button disabled={currentPage === 0} onClick={handlePrevClick}>
+          Left
+        </button>
+        <button disabled={currentPage === pageCount} onClick={handleNextClick}>
+          Right
+        </button>
+      </div>}
+      
       {
         updateModal && <UpdateBook isOpen={updateModal} book={book} onClose={hadleCloseModal} onSubmit={handleUpdeteSubmit} />
       }

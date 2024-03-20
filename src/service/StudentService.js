@@ -12,6 +12,17 @@ const basedUrl = "http://localhost:8080/api/v1.0/students";
     }
     }
     
+    export const getSearchedStudent = async (searchTerm) => {
+        try{
+            const studentData = await axios.get(basedUrl+"/search?query="+searchTerm);
+            return studentData.data;
+        }
+        catch(error){
+            console.error('Error fetching students:', error);
+            throw(error);
+        }
+    }
+
 
 export const updateStudent = async (student, token) => {
     try{

@@ -1,12 +1,16 @@
 # React Library Project
 
-This project is a React library management system, allowing users to manage books, student lists, and borrowing history. It utilizes an API built with Spring Boot.
+This React library management system includes features such as pagination, a search bar, and authorization controls. Users can efficiently manage books, student lists, and borrowing history through a user-friendly interface. The system integrates seamlessly with a Spring Boot API, ensuring robust data management and security.
+### Example Photo
+![alt text](image-1.png)
+![alt text](image-2.png)
 
 ## Repository for API
 
-The API for this project is available on GitHub. You can find it [here](https://github.com/yasinunl/library).
+The API for this project is available on GitHub. You can find it [here](https://github.com/yasinunl/library). You should take a look.
 
 ## Folder Structure
+
 
 The project is structured as follows:
 
